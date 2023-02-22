@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Beautiful Day</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="mainframe">
+        <img id='scenery' src="canyon2.jpg" alt="Scenery Image">
+        <div class="secondframe">
+            <div class="windmillDiv">
+                <img id='windmill' src="windmill.png" alt="windmill">
+            </div>
+            <div class="windfanDiv">
+                <img id='windfan' src="winfan.png" alt="winfan">
+            </div>
+        </div>
+        <div class="redappleDiv">
+            <div><img id='redapple1' src="apple.png" alt="apple"></div>
+            <div><img id='redapple2' src="apple.png" alt="apple"></div>
+            <div><img id='redapple3' src="apple.png" alt="apple"></div>
+         </div>  
+         <div class ='birdDiv'> 
+            <div id="bird"> <img id='birdimage' src="bird.gif" alt="bird"></div>
+         </div>
+         <div class="butterfliesDiv">
+            <img src="butterflies.gif" alt="butterflies">
+        </div>
+        <div class="targetboardDiv">
+            <!--Target board appear when user trigger with id='targetboard' -->
+        </div>        
+        <div id="overlay"></div>
+      </div>
+
+    <div class="daynight">
+        <button id="daynightButton"> Day/ Night</button>
+        <button id="musicButton">Music</button>
+        <button id="birdButton"> Bird </button>
+        <button id="targetButton">Target</button>
+    </div>  
+</body>
+
+<script>
+    const daynight = document.getElementsByClassName('daynight');
+    const daynightButton = document.getElementById('daynightButton');
+    const overlay = document.getElementById('overlay');
+    const music = document.getElementById('musicButton');
+    const bird = document.getElementById('bird');
+    const birdButton = document.getElementById('birdButton');
+    let audiostate = 1;
+    const targetButton = document.getElementById('targetButton');
+    const targetboard = document.getElementsByClassName('targetboardDiv');
+    let targetboardImage = null;
+    
+ 
+    let changeDayNight =  daynightButton.addEventListener('click', myDaynight)
+    let onoffMusic = music.addEventListener('click',myMusic);
+    let flyingBird = birdButton.addEventListener('click',()=>{tl.restart();});
+    let starttarget = targetButton.addEventListener('click', targetMove);
+    let targetboardattackFire = null;
+     
+
+     
+    audioElement = new Audio("song.mp3");
+    audioExplode = new Audio("explosionsound.mp3");
+    let targetStatus = 1;
+
+    function targetboardExplode(){
+        targetboardImage.width='130';
+        targetboardImage.src='explode2.gif';
+        audioExplode.play();
+        setTimeout(()=>{
+            targetboard[0].innerHTML = '';
+            audioExplode.pause();
+            audioExplode.currentTime=0;
+            ++targetStatus;
+        },1000);
+        
+    }
+
+    function targetMove() {
+    ++targetStatus;
+    if (targetStatus%2 != 0){
+        console.log('OFF')
+        targetboard[0].innerHTML = '';
+        }
+    else{
+        console.log('ON');
+         targetboard[0].innerHTML = "<img id='targetboard' src='targetboard.png' alt='target board'>";
+         targetboardImage = document.getElementById('targetboard');
+         targetboardImage.width='100';
+         targetboardattackFire = targetboardImage.addEventListener('click',targetboardExplode);
+    }               
+     
+    anime({
+    targets: '#targetboard',
+    translateX: 1300,
+    direction: 'alternate',
+    easing: 'easeInOutSine',
+    duration:5000,
+    loop:true,
+    });
+
+    }
+
+    anime({
+    targets: '#windfan',
+    rotate: '1turn',
+    loop: true,
+    easing: 'linear',
+    duration: 6000,
+    });
+    
+    var tl = anime.timeline({
+        easing: 'easeOutExpo',
+        duration: 750
+        });
+
+    // Add children
+    tl
+    .add({
+    targets: '#bird',
+    translateX: 1500,
+    duration: 10000
+    })
+    .add({
+    targets: '#bird',
+    rotateY:'180',
+    duration: 3000    
+    })
+    .add({
+    targets: '#bird',
+    translateX: -1500,
+    translateY:  1500,
+    duration: 30000
+    })      
+
+
+    function myDaynight(){
+        console.log('daynightButton clicked');
+        let currentOpacity = window.getComputedStyle(overlay).getPropertyValue('opacity');
+        let zindex = window.getComputedStyle(overlay).getPropertyValue('z-index');
+        currentOpacity = (Math.round(currentOpacity*100)/100).toFixed(2);
+        console.log(zindex);
+        
+        //Night to day
+        if (currentOpacity > 0) {
+            overlay.style.zIndex = '0';
+            console.log('Day:'+ zindex);
+               let timer = setInterval(()=>{
+                currentOpacity = currentOpacity - 0.01;
+                currentOpacity = (Math.round(currentOpacity*100)/100).toFixed(2);
+                console.log(currentOpacity);
+                overlay.style.opacity = currentOpacity;
+                if(currentOpacity<0){
+                    clearInterval(timer);
+                    overlay.style.zIndex = '-1';
+                }        
+            },20);
+          }
+
+          //Day to Night
+          if (currentOpacity < 0.2 ) {
+            overlay.style.zIndex = '0';
+            console.log('Day:'+ zindex);
+             currentOpacity = (currentOpacity*1) + 0.01;
+             let timer = setInterval(()=>{
+                currentOpacity = (currentOpacity*1) + 0.01;
+                currentOpacity = (Math.round(currentOpacity*100)/100).toFixed(2);
+                overlay.style.opacity = currentOpacity;
+                if(currentOpacity > 0.8){
+                    clearInterval(timer);
+                }        
+            },20);
+          }
+
+    }
+
+    function myMusic(){ 
+
+        if (audiostate == 1){
+        audioElement.play();
+        audiostate = audiostate -1;
+        console.log(audiostate);
+        }
+
+        else{
+        audioElement.pause();
+        audiostate = audiostate +1;
+        console.log(audiostate);
+        }
+        
+    }
+
+
+
+</script>
+
+</html>

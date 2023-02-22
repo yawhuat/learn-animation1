@@ -1,0 +1,210 @@
+.mainframe{
+    position:absolute;
+    overflow:hidden;
+}
+
+#scenery{
+    object-fit:cover;
+    width:100%;
+}
+
+#overlay{
+    background-color: black;
+    color:white;
+    width:100%;
+    height:100%;
+    position:absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity:0;
+    z-index:-1
+}
+
+#daynightButton{
+    background-color: rgb(141, 104, 1);
+    border-radius:5px;
+    border-color: transparent;
+    color:white;
+    padding: 10px;
+    cursor:pointer;
+    z-index:2;
+}
+
+#musicButton{
+    background-color: rgb(141, 104, 1);
+    border-radius:5px;
+    border-color: transparent;
+    color:white;
+    padding: 10px;
+    cursor:pointer;
+}
+
+#musicButton:hover{
+    background-color: black;
+}
+
+#birdButton{
+    background-color: rgb(141, 104, 1);
+    border-radius:5px;
+    border-color: transparent;
+    color:white;
+    padding: 10px;
+    cursor:pointer;
+}
+
+#birdButton:hover{
+    background-color: black;
+}
+
+
+.daynight{
+    top:0;
+    right:0;
+    padding-top: 30px;
+    padding-right: 30px;
+    position:fixed
+}
+
+#daynightButton:hover{
+    background-color: black;
+}
+
+#targetButton{
+    background-color: rgb(141, 104, 1);
+    border-radius:5px;
+    border-color: transparent;
+    color:white;
+    padding: 10px;
+    cursor:pointer;
+}
+
+#targetButton:hover{
+    background-color: black;
+}
+
+
+
+.secondframe{
+    position:absolute;
+    justify-content: center;
+    top: 85%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+}
+
+.windfanDiv{
+    position: absolute;
+    top:0;
+    left:0%
+}
+
+.windmillDiv{
+    position:relative;
+    top:10%;
+    left:1%;
+}
+
+#windmill{
+    width:24%;
+}
+
+#windfan{
+    width:30%;
+
+}
+
+.redappleDiv{
+    position:absolute;
+    justify-content: center;
+    top: 55%;
+    right: 0%;
+  }
+
+#redapple1{
+    position:relative;
+    right:10%;
+    width:10%;
+    transition-duration: 2s;
+}
+
+#redapple1:hover{
+  transform: scale(2);
+  }
+
+#redapple2{
+    position:relative;
+    left: 40%;
+    top:20%;
+    width:10%;
+ 
+}
+
+
+#redapple3{
+    position:relative;
+    right:30%;
+    top:5%;
+    width:10%;
+}
+
+.birdDiv{
+    position:absolute;
+    top: 10%;
+    left: -20%;
+  }
+
+#bird{
+    position:relative;
+}
+
+#birdimage{
+    width:50%
+}
+
+#banner{
+position:relative;
+z-index:0
+}
+
+.butterfliesDiv{
+ position:absolute;
+ top: 30%;
+ left:20%
+}
+
+.targetboardDiv{
+    position:absolute;
+    top:20%;
+    left:10%;
+}
+
+#targetboard{
+    position:relative;
+    
+}
+
+@media screen and (max-width: 900px) {
+    .redappleDiv {
+      display:none;
+    }
+    #birdimage{
+        width:30%
+    }
+
+
+  }
+
+@media screen and (max-width: 1200px) {
+    .redappleDiv {
+      display:none;
+    }
+
+    #birdimage{
+        width:30%
+    }
+
+
+  }
+
